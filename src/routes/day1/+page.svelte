@@ -32,11 +32,6 @@
 </script>
 
 <p>average {average}</p>
-<select bind:value={sortMethod}>
-	{#each sortMethods as sortMethod}
-		<option>{sortMethod}</option>
-	{/each}
-</select>
 
 <div class="grid grid-cols-2">
 	<form method="POST" use:enhance class="flex flex-col gap-2">
