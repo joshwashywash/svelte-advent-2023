@@ -17,21 +17,38 @@
 		data.people.reduce((sum, person) => sum + person.tally, 0) / data.people.length
 	);
 
-	const sortMethods = ['nice', 'naughty'] as const;
+	const sortBys = ['nice', 'naughty'] as const;
 
-	type SortMethod = (typeof sortMethods)[number];
+	type SortBy = (typeof sortBys)[number];
 
-	const sorts = $derived<Record<SortMethod, Person[]>>({
+	const sorts = $derived<Record<SortBy, Person[]>>({
 		nice,
 		naughty
 	});
 
-	let sortMethod = $state<SortMethod>('nice');
+	let sortBy = $state<SortBy>('nice');
 
-	const people = $derived(sorts[sortMethod]);
+	const people = $derived(sorts[sortBy]);
 </script>
 
 <p>average {average}</p>
+
+<button
+	type="button"
+	disabled={sortBy === 'nice'}
+	on:click={() => {
+		sortBy = 'nice';
+	}}
+	aria-label="sort people by niceness">nice</button
+>
+<button
+	type="button"
+	disabled={sortBy === 'naughty'}
+	on:click={() => {
+		sortBy = 'naughty';
+	}}
+	aria-label="sort people by naughtiness">naughty</button
+>
 
 <div class="grid grid-cols-2">
 	<form method="POST" use:enhance class="flex flex-col gap-2">
