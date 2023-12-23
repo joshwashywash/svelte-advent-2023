@@ -28,7 +28,7 @@
 
 	let sortMethod = $state<SortMethod>('nice');
 
-	const sort = $derived(sorts[sortMethod]);
+	const people = $derived(sorts[sortMethod]);
 </script>
 
 <p>average {average}</p>
@@ -65,7 +65,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each sort as person}
+			{#each people as person}
 				<tr>
 					<td>{person.name}</td>
 					<td>{person.tally}</td>
