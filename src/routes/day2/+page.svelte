@@ -47,7 +47,7 @@
 	<button
 		type="button"
 		aria-label="decrease the count"
-		on:click={() => {
+		onclick={() => {
 			count -= 1;
 		}}
 	>
@@ -56,7 +56,7 @@
 
 	<button
 		type="button"
-		on:click={() => {
+		onclick={() => {
 			count = 0;
 		}}
 	>

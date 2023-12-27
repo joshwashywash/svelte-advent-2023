@@ -36,7 +36,7 @@
 <button
 	type="button"
 	disabled={sortBy === 'nice'}
-	on:click={() => {
+	onclick={() => {
 		sortBy = 'nice';
 	}}
 	aria-label="sort people by niceness">nice</button
@@ -44,7 +44,7 @@
 <button
 	type="button"
 	disabled={sortBy === 'naughty'}
-	on:click={() => {
+	onclick={() => {
 		sortBy = 'naughty';
 	}}
 	aria-label="sort people by naughtiness">naughty</button
