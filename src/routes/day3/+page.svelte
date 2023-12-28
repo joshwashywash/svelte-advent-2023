@@ -10,20 +10,22 @@
 
 	const packedWeight = $derived(weight(packed));
 	const unpackedWeight = $derived(weight(unpacked));
+
+	const overweight = $derived(packedWeight > data.maxWeight);
 </script>
 
 <div class="grid grid-cols-2">
 	<div>
-		<p>{unpackedWeight}</p>
+		<p>unpacked weight: {unpackedWeight}</p>
 		<ul>
 			{#each unpacked as present}
-				{@const neq = not(equal(present))}
 				<li>
 					<button
+						disabled={overweight}
 						type="button"
 						aria-label="add to packed presents"
 						onclick={() => {
-							unpacked = unpacked.filter(neq);
+							unpacked = unpacked.filter(not(equal(present)));
 							packed.push(present);
 						}}
 					>
@@ -34,16 +36,18 @@
 		</ul>
 	</div>
 	<div>
-		<p>{packedWeight}</p>
+		<p>
+			packed weight:
+			<span class:text-green-400={!overweight} class:text-red-400={overweight}>{packedWeight}</span>
+		</p>
 		<ul>
 			{#each packed as present}
-				{@const neq = not(equal(present))}
 				<li>
 					<button
 						type="button"
 						aria-label="remove from packed presents"
 						onclick={() => {
-							packed = packed.filter(neq);
+							packed = packed.filter(not(equal(present)));
 							unpacked.push(present);
 						}}
 					>

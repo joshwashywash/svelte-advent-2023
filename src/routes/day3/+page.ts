@@ -11,6 +11,7 @@ export const load: PageLoad = async (event) => {
 	const packed: Present[] = [];
 	return {
 		packed,
-		unpacked
+		unpacked,
+		maxWeight: 100
 	};
 };
