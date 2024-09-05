@@ -14,7 +14,8 @@
 	const nice = $derived(data.people.toSorted((a, b) => b.tally - a.tally));
 	const naughty = $derived(nice.toReversed());
 	const average = $derived(
-		data.people.reduce((sum, person) => sum + person.tally, 0) / data.people.length
+		data.people.reduce((sum, person) => sum + person.tally, 0) /
+			data.people.length,
 	);
 
 	const sortBys = ['nice', 'naughty'] as const;
@@ -23,32 +24,43 @@
 
 	const sorts = $derived<Record<SortBy, Person[]>>({
 		nice,
-		naughty
+		naughty,
 	});
 
 	let sortBy = $state<SortBy>('nice');
 
+	const sortByNice = () => {
+		sortBy = 'nice';
+	};
+
+	const sortByNaughty = () => {
+		sortBy = 'naughty';
+	};
+
 	const people = $derived(sorts[sortBy]);
+
+	let sortedByNice = $derived(sortBy === 'nice');
+	let sortedByNaughtiness = $derived(sortBy === 'naughty');
 </script>
 
 <p>average {average}</p>
 
 <button
 	type="button"
-	disabled={sortBy === 'nice'}
-	onclick={() => {
-		sortBy = 'nice';
-	}}
-	aria-label="sort people by niceness">nice</button
+	disabled={sortedByNice}
+	onclick={sortByNice}
+	aria-label="sort people by niceness"
 >
+	nice
+</button>
 <button
 	type="button"
-	disabled={sortBy === 'naughty'}
-	onclick={() => {
-		sortBy = 'naughty';
-	}}
-	aria-label="sort people by naughtiness">naughty</button
+	disabled={sortedByNaughtiness}
+	onclick={sortByNaughty}
+	aria-label="sort people by naughtiness"
 >
+	naughty
+</button>
 
 <div class="grid grid-cols-2">
 	<form method="POST" use:enhance class="flex flex-col gap-2">

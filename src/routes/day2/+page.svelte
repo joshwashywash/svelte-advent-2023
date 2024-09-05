@@ -27,7 +27,7 @@
 
 	const viewBox = $derived(`0 0 ${x} ${y}`);
 	const d = $derived(
-		`m ${eyeLeftX} ${mouthLeftX} q ${controlPointMouthX} ${controlPointMouthY} ${eyeDiffX} 0`
+		`m ${eyeLeftX} ${mouthLeftX} q ${controlPointMouthX} ${controlPointMouthY} ${eyeDiffX} 0`,
 	);
 </script>
 

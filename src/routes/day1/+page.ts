@@ -7,6 +7,6 @@ export const load: PageLoad = async (event) => {
 		.fetch(url, { method: 'GET' })
 		.then((response) => response.json());
 	return {
-		people
+		people,
 	};
 };

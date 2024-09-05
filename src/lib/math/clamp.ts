@@ -1,1 +1,5 @@
-export default (min: number, max: number) => (x: number) => Math.max(min, Math.min(max, x));
+export default (min: number, max: number) => {
+	return (x: number) => {
+		return Math.max(min, Math.min(max, x));
+	};
+};

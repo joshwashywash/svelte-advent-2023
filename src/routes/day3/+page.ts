@@ -12,6 +12,6 @@ export const load: PageLoad = async (event) => {
 	return {
 		packed,
 		unpacked,
-		maxWeight: 100
+		maxWeight: 100,
 	};
 };

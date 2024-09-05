@@ -1,12 +1,11 @@
 <script lang="ts">
-	import equal from './equal';
-	import not from './not';
 	import weight from './weight';
+	import { SvelteSet } from 'svelte/reactivity';
 
 	let { data } = $props();
 
-	let packed = $state(data.packed);
-	let unpacked = $state(data.unpacked);
+	let packed = new SvelteSet(data.packed);
+	let unpacked = new SvelteSet(data.unpacked);
 
 	const packedWeight = $derived(weight(packed));
 	const unpackedWeight = $derived(weight(unpacked));
@@ -25,8 +24,9 @@
 						type="button"
 						aria-label="add to packed presents"
 						onclick={() => {
-							unpacked = unpacked.filter(not(equal(present)));
-							packed.push(present);
+							if (unpacked.delete(present)) {
+								packed.add(present);
+							}
 						}}
 					>
 						{present.name}: {present.weight}
@@ -38,7 +38,9 @@
 	<div>
 		<p>
 			packed weight:
-			<span class:text-green-400={!overweight} class:text-red-400={overweight}>{packedWeight}</span>
+			<span class:text-green-400={!overweight} class:text-red-400={overweight}
+				>{packedWeight}</span
+			>
 		</p>
 		<ul>
 			{#each packed as present}
@@ -47,8 +49,9 @@
 						type="button"
 						aria-label="remove from packed presents"
 						onclick={() => {
-							packed = packed.filter(not(equal(present)));
-							unpacked.push(present);
+							if (packed.delete(present)) {
+								unpacked.add(present);
+							}
 						}}
 					>
 						{present.name}: {present.weight}
