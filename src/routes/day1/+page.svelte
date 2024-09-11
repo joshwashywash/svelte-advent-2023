@@ -4,18 +4,12 @@
 
 	let { data, form } = $props();
 
-	$effect(() => {
-		if (form?.person !== undefined) {
-			data.people.push(form.person);
-			form = null;
-		}
-	});
+	let people = $derived(data.people);
 
-	const nice = $derived(data.people.toSorted((a, b) => b.tally - a.tally));
+	const nice = $derived(people.toSorted((a, b) => b.tally - a.tally));
 	const naughty = $derived(nice.toReversed());
 	const average = $derived(
-		data.people.reduce((sum, person) => sum + person.tally, 0) /
-			data.people.length,
+		people.reduce((sum, person) => sum + person.tally, 0) / people.length,
 	);
 
 	const sortBys = ['nice', 'naughty'] as const;
@@ -29,15 +23,14 @@
 
 	let sortBy = $state<SortBy>('nice');
 
-	const sortByNice = () => {
-		sortBy = 'nice';
+	const createSortBy = (s: SortBy) => () => {
+		sortBy = s;
 	};
 
-	const sortByNaughty = () => {
-		sortBy = 'naughty';
-	};
+	const sortByNice = createSortBy('nice');
+	const sortByNaughty = createSortBy('naughty');
 
-	const people = $derived(sorts[sortBy]);
+	const sorted = $derived(sorts[sortBy]);
 
 	let sortedByNice = $derived(sortBy === 'nice');
 	let sortedByNaughtiness = $derived(sortBy === 'naughty');
@@ -89,7 +82,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each people as person}
+			{#each sorted as person}
 				<tr>
 					<td>{person.name}</td>
 					<td>{person.tally}</td>

@@ -1,6 +1,4 @@
 <script lang="ts">
-	import clamp from '$lib/math/clamp';
-
 	let count = $state(0);
 
 	const x = 10;
@@ -18,17 +16,16 @@
 	const min = -half;
 	const max = half;
 
-	const c = clamp(min, max);
-
-	const controlPointMouthY = $derived(c(count));
-
 	const mouthLeftX = 2 * g;
 	const controlPointMouthX = mouthLeftX - eyeMidX;
 
-	const viewBox = $derived(`0 0 ${x} ${y}`);
+	const viewBox = `0 0 ${x} ${y}`;
 	const d = $derived(
-		`m ${eyeLeftX} ${mouthLeftX} q ${controlPointMouthX} ${controlPointMouthY} ${eyeDiffX} 0`,
+		`m ${eyeLeftX} ${mouthLeftX} q ${controlPointMouthX} ${count} ${eyeDiffX} 0`,
 	);
+
+	const atMax = $derived(count === max);
+	const atMin = $derived(count === min);
 </script>
 
 <p>{count}</p>
@@ -40,6 +37,7 @@
 		onclick={() => {
 			count += 1;
 		}}
+		disabled={atMax}
 	>
 		+
 	</button>
@@ -50,6 +48,7 @@
 		onclick={() => {
 			count -= 1;
 		}}
+		disabled={atMin}
 	>
 		-
 	</button>

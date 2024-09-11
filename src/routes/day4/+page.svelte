@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { invalidate } from '$app/navigation';
+	import { invalidateAll } from '$app/navigation';
 	import { url } from './constants';
 
 	let { data } = $props();
 
 	$effect(() => {
 		const interval = setInterval(() => {
-			invalidate(url);
+			invalidateAll();
 		}, 2000);
 		return () => {
 			clearInterval(interval);

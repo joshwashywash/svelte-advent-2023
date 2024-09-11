@@ -22,7 +22,7 @@
 					<button
 						disabled={overweight}
 						type="button"
-						aria-label="add to packed presents"
+						aria-label={`add ${present.name}'s present to the packed presents`}
 						onclick={() => {
 							if (unpacked.delete(present)) {
 								packed.add(present);
@@ -47,7 +47,7 @@
 				<li>
 					<button
 						type="button"
-						aria-label="remove from packed presents"
+						aria-label={`remove ${present.name}'s present from the packed presents`}
 						onclick={() => {
 							if (packed.delete(present)) {
 								unpacked.add(present);

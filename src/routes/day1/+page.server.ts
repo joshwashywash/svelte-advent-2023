@@ -1,5 +1,20 @@
 import { fail } from '@sveltejs/kit';
-import type { Actions } from './$types';
+import type { Actions, PageServerLoad } from './$types';
+
+const url = 'https://advent.sveltesociety.dev/data/2023/day-one.json';
+
+const added: Person[] = [];
+
+export const load: PageServerLoad = async (event) => {
+	const people: Person[] = await event
+		.fetch(url, { method: 'GET' })
+		.then((response) => response.json());
+
+	return {
+		people: people.concat(added),
+	};
+};
+
 export const actions: Actions = {
 	async default(event) {
 		const data = await event.request.formData();
@@ -25,6 +40,8 @@ export const actions: Actions = {
 			name,
 			tally,
 		};
+
+		added.push(person);
 
 		return {
 			success: true,
